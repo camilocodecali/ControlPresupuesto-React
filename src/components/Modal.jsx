@@ -4,7 +4,7 @@ import Mensaje from "./Mensaje";
 import CerrarBtn from "../img/cerrar.svg";
 
 
-const Modal = ({setModal, animarModal, setAnimarModal}) => {
+const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto}) => {
 
     const [nombre, setNombre] = useState('');
     const [cantidad, setCantidad] = useState('');
@@ -31,6 +31,8 @@ const Modal = ({setModal, animarModal, setAnimarModal}) => {
             }, 3000)
             return
         }
+
+        guardarGasto({nombre,cantidad, categoria});
     }
 
   return (
@@ -46,9 +48,9 @@ const Modal = ({setModal, animarModal, setAnimarModal}) => {
             onSubmit={handleSubmit} 
             className={`formulario ${animarModal ? "animar" : 'cerrar'}`}>
             <legend>Nuevo Gasto</legend>
+            {mensaje && <Mensaje tipo="error">{mensaje}</Mensaje>}
             <div className="campo">
                 <label htmlFor="nombre">Nombre Gasto</label>
-                {mensaje && <Mensaje tipo="error">{mensaje}</Mensaje>}
                 <input 
                     id="nombre"
                     type="text" 
