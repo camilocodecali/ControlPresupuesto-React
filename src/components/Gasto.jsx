@@ -29,19 +29,21 @@ const diccionarioGastos = {
 }
 
 
-const Gasto = ({gasto}) => {
+const Gasto = ({gasto, setGastoEditar,eliminarGasto}) => {
     const {categoria, nombre, cantidad, id, fecha} = gasto;
 
     const leadingActions = () => (
         <LeadingActions>
-            <SwipeAction onClick={()=> console.log('Editar...')}>
+            <SwipeAction onClick={()=> setGastoEditar(gasto)}>
                 Editar
             </SwipeAction>
         </LeadingActions>
     )
     const trailingActions = () => (
         <TrailingActions onClick>
-           <SwipeAction onClick={()=> console.log('Borrar...')}>
+           <SwipeAction onClick={()=> eliminarGasto(id)}
+            destructive={true}
+           >
                 Borrar
             </SwipeAction>
         </TrailingActions>
