@@ -17,6 +17,9 @@ function App() {
 
   const [gastoEditar, setGastoEditar] = useState({})
 
+  const [filtro, setFiltro] = useState('')
+  const [gastosFiltrados, setGastosFiltrados] = useState([])
+
 
 
   const [gastos, setGastos] = useState(
@@ -41,6 +44,17 @@ function App() {
   useEffect(()=>{
     localStorage.setItem('gastos', JSON.stringify(gastos) ?? [])
   }, [gastos])
+
+
+  useEffect(()=>{
+    if(filtro){
+     //filtrar gastos por categoria
+      const gastosFiltrados = gastos.filter( gasto => gasto.categoria === filtro)
+      setGastosFiltrados(gastosFiltrados)
+      
+    }
+  },[filtro])
+
 
   useEffect(()=>{
     const presupuestoLS = Number(localStorage.getItem('presupuesto')) ?? 0;
@@ -98,13 +112,18 @@ function App() {
       { isValidPresupuesto && (
         <>
               <main>
-                <Filtros>
+                <Filtros
+                  filtro = {filtro}
+                  setFiltro = {setFiltro}
+                >
                   
                 </Filtros>
                 <ListadoGastos
                   gastos={gastos}
                   setGastoEditar={setGastoEditar}
                   eliminarGasto={eliminarGasto}
+                  gastosFiltrados={gastosFiltrados}
+                  filtro={filtro}
                 />
               </main>
               <div className='nuevo-gasto'>
